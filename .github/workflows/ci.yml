@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install project
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --require-hashes --requirement requirements-dev.lock
+          python -m pip install --no-deps --editable .
+          python -m pip check
+
+      - name: Lint
+        run: python -m ruff check src tests scripts examples
+
+      - name: Test with coverage gate
+        run: >-
+          python -m pytest
+          --cov=industrial_catalog
+          --cov-report=term-missing
+          --cov-report=xml
+          --cov-fail-under=85
+
+      - name: Check shell syntax
+        run: bash -n scripts/*.sh
+
+      - name: Run deterministic dry-run demo
+        run: |
+          python examples/create_sample_catalog.py --output .demo/corpus/sample-catalog.pdf
+          industrial-catalog benchmark --config configs/pipeline.dry-run.yaml --output-dir .demo/run --dry-run --smoke
+          industrial-catalog query FlexCouple --kb .demo/run/knowledge_base.sqlite3 --text-only
+
+      - name: Build wheel and source distribution
+        run: python -m build
+
+      - name: Verify built wheel in a clean environment
+        run: |
+          python -m venv /tmp/industrial-catalog-wheel-check
+          /tmp/industrial-catalog-wheel-check/bin/python -m pip install dist/*.whl
+          /tmp/industrial-catalog-wheel-check/bin/industrial-catalog --version
+          /tmp/industrial-catalog-wheel-check/bin/industrial-catalog --help

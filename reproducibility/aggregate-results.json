@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0",
+  "software_version": "0.1.0",
+  "recorded_date": "2026-08-07",
+  "evidence_scope": "Aggregate metrics transcribed from verified private operational artifacts",
+  "source_artifacts_included": false,
+  "corpus_inventory": {
+    "documents": 220,
+    "pages": 17837,
+    "vendor_catalogs": {
+      "documents": 110,
+      "pages": 6069
+    },
+    "reference_library": {
+      "documents": 110,
+      "pages": 11768
+    },
+    "redistributed": false
+  },
+  "runs": [
+    {
+      "label": "bounded-production-validation",
+      "run_id": "20260807T064527Z-971750",
+      "claim_boundary": "End-to-end integration and capacity evidence; not corpus completion",
+      "metrics": {
+        "documents_attempted": 20,
+        "documents_review": 18,
+        "documents_failed": 2,
+        "pages_counted": 105,
+        "extracted_elements": 1622,
+        "products_parsed": 73,
+        "products_guard_rejected": 41,
+        "products_stored": 31,
+        "products_invalid": 1,
+        "knowledge_chunks": 1655,
+        "elapsed_seconds": 828.999771
+      }
+    },
+    {
+      "label": "hardened-two-document-replay",
+      "run_id": "20260807T073659Z-1185130",
+      "claim_boundary": "Targeted replay of the two prior failures after resilience hardening",
+      "metrics": {
+        "documents_attempted": 2,
+        "documents_review": 2,
+        "documents_failed": 0,
+        "pages_completed": 24,
+        "extracted_elements": 531,
+        "ingestion_batches": 23,
+        "products_parsed": 1,
+        "products_guard_rejected": 1,
+        "products_stored": 0,
+        "knowledge_chunks": 531,
+        "citations": 531,
+        "elapsed_seconds": 85.468255
+      }
+    }
+  ],
+  "limitations": [
+    "The complete 17837-page campaign was not executed.",
+    "The source PDFs and raw run artifacts are not redistributed.",
+    "Model revisions and the complete CUDA serving environment were not immutably pinned.",
+    "Metrics are aggregate operational evidence, not human-graded extraction-accuracy estimates."
+  ]
+}

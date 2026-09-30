@@ -1,0 +1,27 @@
+# Public, deterministic smoke-test profile. Run commands from the repository root.
+run_name: public-dry-run-demo
+mode: dry-run
+
+paths:
+  corpus_root: .demo/corpus
+  artifact_root: .demo/artifacts
+  output_root: .demo/output
+  checkpoint_db: .demo/checkpoints/extraction.sqlite3
+
+routing:
+  native_min_chars: 80
+  native_min_chars_per_square_inch: 2.0
+  render_dpi: 200
+  verify_identifier_regions: false
+  verify_tables: true
+
+parse_endpoint: null
+ocr_endpoint: null
+llm_endpoint: null
+embedding_endpoint: null
+
+# Reserved compatibility fields. The current bounded runner is sequential.
+page_workers: 1
+document_workers: 1
+parser_workers: 1
+gpu_ids: []

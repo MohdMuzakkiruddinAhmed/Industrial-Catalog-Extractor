@@ -1,0 +1,38 @@
+name: Bug report
+description: Report a reproducible problem using synthetic or shareable inputs.
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Do not attach proprietary catalogs, credentials, raw provider payloads, or
+        private databases. Use a minimal synthetic fixture where possible.
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What happened and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction steps
+      description: Include commands and a minimal shareable input.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Repository version, Python, OS, model revisions, serving engine, CUDA, and GPU when relevant.
+    validations:
+      required: true
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Data-safety confirmation
+      options:
+        - label: I removed secrets and content I am not authorized to publish.
+          required: true

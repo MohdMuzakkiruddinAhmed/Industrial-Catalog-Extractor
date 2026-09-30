@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "observed_date": "2026-08-07",
+  "profile": "private-eight-a100-validation-server",
+  "hardware": {
+    "gpu_model": "NVIDIA A100-SXM4 80GB",
+    "gpu_count": 8,
+    "aggregate_vram_gb": 640,
+    "logical_cpus": 255,
+    "system_memory": "approximately 2 TB",
+    "data_volume_total_tb": 20.4,
+    "data_volume_free_tb": 17.4
+  },
+  "services": [
+    {
+      "role": "document_vlm",
+      "model_id": "nvidia/NVIDIA-Nemotron-Parse-v1.2",
+      "immutable_model_revision": null,
+      "example_gpu": 1,
+      "port": 8001
+    },
+    {
+      "role": "structured_llm",
+      "model_id": "nvidia/Llama-3.1-Nemotron-Nano-8B-v1",
+      "immutable_model_revision": null,
+      "example_gpu": 3,
+      "port": 8003
+    },
+    {
+      "role": "retrieval_embedding",
+      "model_id": "nvidia/Nemotron-3-Embed-8B-BF16",
+      "immutable_model_revision": null,
+      "example_gpu": 5,
+      "port": 8004
+    }
+  ],
+  "software": {
+    "extractor_python": "3.12",
+    "vllm": "0.20.0",
+    "cuda": null,
+    "nvidia_driver": null,
+    "pytorch": null,
+    "xgrammar": null,
+    "container_digest": null
+  },
+  "reproducibility_note": "Null immutable fields prevent exact live-model reproduction; pin them in future run records."
+}

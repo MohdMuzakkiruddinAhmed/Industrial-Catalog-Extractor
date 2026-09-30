@@ -1,0 +1,15 @@
+{
+  "name": "industrial-catalog-extractor-report-tools",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Optional browser-based PDF rendering for the research report",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "report:pdf": "node scripts/print_report_pdf.js"
+  },
+  "devDependencies": {
+    "playwright": "1.62.0"
+  }
+}

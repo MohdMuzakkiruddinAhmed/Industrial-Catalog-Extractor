@@ -1,0 +1,119 @@
+[build-system]
+requires = ["hatchling==1.31.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "industrial-catalog-extractor"
+dynamic = ["version"]
+description = "Evidence-preserving NVIDIA document extraction pipeline for industrial catalogs"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+license = { file = "LICENSE" }
+authors = [{ name = "Industrial Catalog Extractor contributors" }]
+keywords = [
+  "document-ai",
+  "industrial-catalogs",
+  "nemotron",
+  "nvidia",
+  "rag",
+  "vlm",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: Apache Software License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+  "pydantic>=2.10,<3",
+  "PyMuPDF>=1.25,<2",
+  "PyYAML>=6.0,<7",
+]
+
+[project.optional-dependencies]
+report = [
+  "mammoth>=1.9,<2",
+  "Pillow>=10,<13",
+  "python-docx>=1.1,<2",
+]
+dev = [
+  "build>=1.2,<2",
+  "pre-commit>=4,<5",
+  "pytest>=8.3,<10",
+  "pytest-cov>=6,<8",
+  "ruff>=0.9,<1",
+]
+
+[project.urls]
+Repository = "https://github.com/MohdMuzakkiruddinAhmed/Industrial-Catalog-Extractor"
+Issues = "https://github.com/MohdMuzakkiruddinAhmed/Industrial-Catalog-Extractor/issues"
+Documentation = "https://github.com/MohdMuzakkiruddinAhmed/Industrial-Catalog-Extractor/tree/main/docs"
+
+[project.scripts]
+industrial-catalog = "industrial_catalog.cli:main"
+
+[tool.hatch.version]
+path = "src/industrial_catalog/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/industrial_catalog"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "/.dockerignore",
+  "/.editorconfig",
+  "/.env.example",
+  "/.gitattributes",
+  "/.gitignore",
+  "/.pre-commit-config.yaml",
+  "/.github",
+  "/CHANGELOG.md",
+  "/configs",
+  "/DATA_AVAILABILITY.md",
+  "/Dockerfile",
+  "/docs",
+  "/examples",
+  "/Makefile",
+  "/PUBLISHING_CHECKLIST.md",
+  "/reports",
+  "/reproducibility",
+  "/scripts",
+  "/src",
+  "/tests",
+  "/CITATION.cff",
+  "/CONTRIBUTING.md",
+  "/LICENSE",
+  "/NOTICE",
+  "/package.json",
+  "/pnpm-lock.yaml",
+  "/README.md",
+  "/requirements.in",
+  "/requirements-dev.lock",
+  "/requirements.lock",
+  "/requirements-model.txt",
+  "/SECURITY.md",
+  "/THIRD_PARTY_MODELS.md",
+  "/THIRD_PARTY_NOTICES.md",
+]
+exclude = [
+  "/reports/qa",
+  "/reports/~$*",
+  "/reports/.~lock.*#",
+  "/tmp",
+  "/transfer_staging",
+]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]

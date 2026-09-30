@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this software in research, cite this repository and the NVIDIA model cards listed in THIRD_PARTY_MODELS.md."
+title: "Industrial Catalog Extractor: an evidence-preserving NVIDIA VLM-to-RAG pipeline"
+type: software
+url: "https://github.com/MohdMuzakkiruddinAhmed/Industrial-Catalog-Extractor"
+repository-code: "https://github.com/MohdMuzakkiruddinAhmed/Industrial-Catalog-Extractor"
+authors:
+  - name: "Industrial Catalog Extractor contributors"
+version: 0.1.0
+date-released: 2026-08-07
+license: Apache-2.0
+abstract: >-
+  A research implementation for routing industrial PDF pages,
+  extracting grounded document evidence with NVIDIA Nemotron Parse, producing
+  schema-constrained product records with Nemotron Nano, validating evidence
+  lineage, and building a citation-bearing SQLite RAG knowledge base with
+  NVIDIA Nemotron embeddings.
+keywords:
+  - document AI
+  - industrial catalogs
+  - NVIDIA Nemotron
+  - retrieval-augmented generation
+  - vision-language model

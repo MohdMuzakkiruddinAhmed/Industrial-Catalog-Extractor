@@ -1,0 +1,56 @@
+# This file is intentionally compatible with industrial_catalog.config.PipelineConfig.
+# Copy it to pipeline.yaml and adjust endpoint ports only after the local NIM/vLLM
+# services are healthy. Physical GPUs 0 and 2 are reserved and must never be used.
+run_name: industrial-catalog-benchmark
+mode: benchmark
+
+paths:
+  corpus_root: /data/industrial-data-corps/corpus/raw/vendor_product_catalogs
+  artifact_root: /data/industrial-data-corps/artifacts
+  output_root: /data/industrial-data-corps/extraction
+  checkpoint_db: /data/industrial-data-corps/checkpoints/extraction.sqlite3
+
+routing:
+  # Prefer embedded PDF text when it is substantial. Route sparse, scanned, or
+  # structurally complex pages to Nemotron Parse and independently verify exact
+  # identifiers/table cells with OCR.
+  native_min_chars: 80
+  native_min_chars_per_square_inch: 2.0
+  render_dpi: 200
+  # Identifier OCR remains off until a dedicated service is deployed on port 8002.
+  verify_identifier_regions: false
+  # Keep table pages on the document VLM route even without a separate OCR service.
+  verify_tables: true
+
+# Initial public-Hugging-Face service: physical GPU 1.
+parse_endpoint:
+  base_url: http://127.0.0.1:8001
+  model: nvidia/NVIDIA-Nemotron-Parse-v1.2
+  timeout_seconds: 240
+  max_retries: 7
+
+# OCR is intentionally absent from the initial two-service smoke deployment.
+ocr_endpoint: null
+
+# Initial public-Hugging-Face service: physical GPU 3. The benchmark runner selects
+# the OpenAI response_format dialect for constrained JSON when using local vLLM.
+llm_endpoint:
+  base_url: http://127.0.0.1:8003
+  model: nvidia/Llama-3.1-Nemotron-Nano-8B-v1
+  timeout_seconds: 240
+  max_retries: 3
+
+# Citation-bearing RAG embeddings: physical GPU 5, OpenAI-compatible endpoint.
+embedding_endpoint:
+  base_url: http://127.0.0.1:8004
+  model: nvidia/Nemotron-3-Embed-8B-BF16
+  timeout_seconds: 240
+  max_retries: 3
+
+page_workers: 2
+document_workers: 2
+parser_workers: 1
+
+# These are the only physical GPU indices visible to pipeline commands. The initial
+# services use 1 and 3; optional RAG embedding uses 5; 4, 6, and 7 remain available.
+gpu_ids: [1, 3, 4, 5, 6, 7]
