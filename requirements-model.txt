@@ -3,4 +3,4 @@
 # The CUDA, PyTorch, driver, and accelerator package set must be selected for the
 # target Linux/NVIDIA environment. This file is intentionally not described as a
 # complete cross-platform lock.
-vllm==0.20.0
+vllm==0.30.0
